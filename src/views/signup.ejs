@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Beauty_admin</title>
+
+    <!-- Font Icon -->
+    <link
+      rel="stylesheet"
+      href="/fonts/material-icon/css/material-design-iconic-font.min.css"
+    />
+    <link rel="icon" type="image/png" href="/img/setting.webp"/>
+    <!-- Main css -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <!-- Sign up form -->
+      <section class="signup">
+        <div class="container">
+          <div class="signup-content">
+            <div class="signup-form">
+              <h2 class="form-title">Sign up</h2>
+              <form
+                method="POST"
+                class="register-form"
+                id="register-form"
+                onsubmit="return validateSignupForm()"
+                action="/admin/signup"
+                enctype="multipart/form-data"
+              >
+                <div class="form-group">
+                  <label for="name"
+                    ><i class="zmdi zmdi-account material-icons-name"></i
+                  ></label>
+                  <input
+                    type="text"
+                    name="memberNick"
+                    class="member-nick"
+                    placeholder="Username"
+                    value=""
+                    id="memberNick"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="phone"><i class="zmdi zmdi-phone"></i></label>
+                  <input
+                    type="number"
+                    name="memberPhone"
+                    class="member-phone"
+                    placeholder="Phone"
+                    value=""
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                  <input
+                    type="password"
+                    id="pass"
+                    name="memberPassword"
+                    placeholder="Password"
+                    value=""
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="re-pass"
+                    ><i class="zmdi zmdi-lock-outline"></i
+                  ></label>
+                  <input
+                    type="password"
+                    id="re_pass"
+                    name="confirmPassword"
+                    placeholder="Repeat password"
+                    value=""
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="image">
+                    <i class="zmdi zmdi-image material-icons-name"></i>
+                  </label>
+                  <input
+                    class="upload-image"
+                    type="file"
+                    name="memberImage"
+                    id="input-file"
+                    placeholder="Upload an image"
+                  />
+                </div>
+                <div class="form-group">
+                  <p>
+                    Make sure restaurant image is in .jpg, .jpeg, or .png format
+                    before uploading.
+                  </p>
+                </div>
+                <div class="form-group form-button">
+                  <input
+                    type="submit"
+                    name="signup"
+                    id="signup"
+                    class="form-submit"
+                    value="Register"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="signup-image">
+              <figure>
+                <img
+                  id="signup-changed-image"
+                  src="/img/signup-image.jpg"
+                  alt="signup image"
+                />
+              </figure>
+              <div style="display: flex; justify-content: space-evenly">
+                <a href="/admin/login" class="signup-image-link"
+                  >I am already member</a
+                >
+                <a href="/admin" class="signup-image-link">Home</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+  <!-- JS -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/js/signup.js"></script>
+</html>

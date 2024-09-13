@@ -1,0 +1,105 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(32, 32, 32);
+  color: rgb(255, 255, 255);
+}
+
+.anim, .anim svg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.anim path {
+  stroke-width: 2;
+}
+
+.navigation-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin: 0 10px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 30px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+.nav-link.active {
+  color: #595959;
+}
+.nav-link:hover {
+  background-color: transparent;
+  color: grey;
+}
+
+body.colorful-mode .nav-link {
+  color: #f6f5f5;
+}
+
+body.colorful-mode .nav-link:hover {
+  background-color: rgb(18, 18, 18);
+  color: grey;
+}
+
+body.colorful-mode .nav-link.active {
+  color: #595959;
+}
+
+body.colorful-mode {
+  background-color: rgb(18, 18, 18);
+  color: rgb(255, 255, 255);
+}
+
+body.dark-mode {
+  background:#fff4;
+  color: rgb(34, 34, 34);
+}
+
+body.dark-mode .nav-link {
+  color: rgb(34, 34, 34);
+}
+
+body.dark-mode .nav-link:hover {
+  background-color: transparent;
+  color: rgb(243, 240, 240);
+}
+
+.dark-mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background-color: rgb(175, 164, 164);
+  color: black;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.colorful-mode .dark-mode-toggle {
+  background-color: rgb(32, 32, 32);
+  color: rgb(255, 255, 255);
+}
