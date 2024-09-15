@@ -1,119 +1,105 @@
 <!DOCTYPE html>
- <html lang="en">
- 
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <title>Convert | Export html Table to CSV & EXCEL File</title>
-   <link rel="stylesheet" type="text/css" href="/css/users.css">
-   <!-- <link rel="stylesheet" type="text/css" href="/css/home.css"> -->
- </head>
- 
- <body>
-   <main class="table" id="customers_table">
-     <% if(!member) { %>
-       <div class="table_header">
-         <div class="navigation-menu">
-           <ul class="nav flex-column">
-             <li class="nav-item">
-               <a class="nav-link" href="/admin">Home</a>
-             </li>
-             <li class="nav-item" style="cursor: pointer">
-               <a class="nav-link" href="/admin/signup">SignUp</a>
-             </li>
-             <li class="nav-item" style="cursor: pointer">
-               <a class="nav-link" href="/admin/login">Login</a>
-             </li>
-         </ul>
-           </ul>
-       </div>
-       <div class="users-frame" style="color: #dddddd">
-         <div class="board" style="font-size: 40px">Please login first!</div>
-       </div>
-     <% } else { %>
-     <div class="table_header">
-       <div class="navigation-menu">
-         <ul class="nav flex-column">
-           <li class="nav-item">
-             <a class="nav-link" href="/admin">Home</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link" href="/admin/product/all">Products</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link active" href="/admin/user/all">Users</a>
-           </li>
-           <li class="nav-item" onclick="return confirm('Do you want to logout?')">
-             <a class="nav-link" href="/admin/logout">Logout</a>
-           </li>
-         </ul>
-       </div>
-       <section class="table__header">
-         <h1>Customer's Orders</h1>
-         <div class="input-group">
-           <input type="search" placeholder="Search Data...">
-           <img src="/img/userImages/search.png" alt="">
-         </div>
-         <div class="export__file">
-           <label for="export-file" class="export__file-btn" title="Export File"></label>
-           <input type="checkbox" id="export-file">
-           <div class="export__file-options">
-             <label>Export As &nbsp; &#10140;</label>
-             <label for="export-file" id="toPDF">PDF <img src="/img/userImages/pdf.png" alt=""></label>
-             <label for="export-file" id="toJSON">JSON <img src="/img/userImages/json.png" alt=""></label>
-             <label for="export-file" id="toCSV">CSV <img src="/img/userImages/csv.png" alt=""></label>
-             <label for="export-file" id="toEXCEL">EXCEL <img src="/img/userImages/excel.png" alt=""></label>
-           </div>
-         </div>
-       </section>
-       <section class="table__body">
-         <table>
-           <thead>
-             <tr>
-               <th> Id <span class="icon-arrow">&UpArrow;</span></th>
-               <th> Customer <span class="icon-arrow">&UpArrow;</span></th>
-               <th> Location <span class="icon-arrow">&UpArrow;</span></th>
-               <th> Order Date <span class="icon-arrow">&UpArrow;</span></th>
-               <th> Status <span class="icon-arrow">&UpArrow;</span></th>
-               <th> Contact <span class="icon-arrow">&UpArrow;</span></th>
-             </tr>
-           </thead>
-             <!--  LOOP USERS: START  -->
-             <% if (users.length === 0) { %>
-               <p>No users have signed up yet.</p>
-               <% } else { %>
-                 <% users.map((value, key) => { %>
-                   <tbody>
-                     <tr>
-                       <td> <%= key + 1 %> </td>
-                       <td> 
-                        <img src="<%= value.memberImages && value.memberImages.length > 0 ? value.memberImages[0] : '/img/default.jpeg' %>" alt=""><%= value.memberNick %>
-                      </td>
-                      <td> <%= value.memberAddress %> </td>
-                      <td> 
-                        <%= new Date(value.createdAt).toDateString().split(' ').slice(1, 4).join(' ') %> 
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Convert | Export html Table to CSV & EXCEL File</title>
+  <link rel="stylesheet" type="text/css" href="/css/users.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/home.css"> -->
+</head>
+
+<body>
+  <main class="table" id="customers_table">
+    <section class="table__header">
+      <div class="export_file">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/product/all">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/admin/user/all">Users</a>
+          </li>
+          <li class="nav-item" onclick="return confirm('Do you want to logout?')">
+            <a class="nav-link" href="/admin/logout">Logout</a>
+          </li>
+        </ul>
+      </div>
+      <div class="input-group">
+        <input type="search" placeholder="Search Data...">
+        <img src="/img/userImages/search.png" alt="">
+      </div>
+      <div class="export__file">
+        <label for="export-file" class="export__file-btn" title="Export File"></label>
+        <input type="checkbox" id="export-file">
+        <div class="export__file-options">
+          <label>Export As &nbsp; &#10140;</label>
+          <label for="export-file" id="toPDF">PDF <img src="/img/userImages/pdf.png" alt=""></label>
+          <label for="export-file" id="toJSON">JSON <img src="/img/userImages/json.png" alt=""></label>
+          <label for="export-file" id="toCSV">CSV <img src="/img/userImages/csv.png" alt=""></label>
+          <label for="export-file" id="toEXCEL">EXCEL <img src="/img/userImages/excel.png" alt=""></label>
+        </div>
+      </div>
+    </section>
+    <section class="table__body">
+      <!--  LOOP USERS: START  -->
+      <% if (users.length===0) { %>
+        <p>No users have signed up yet.</p>
+        <% } else { %>
+            <table>
+              <thead>
+                <tr>
+                  <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Customer <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Location <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Order Date <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                  <th> Contact <span class="icon-arrow">&UpArrow;</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% users.map((value, key)=> { %>
+                <tr>
+                  <td>
+                    <%= key + 1 %>
+                  </td>
+                  <td>
+                    <img
+                      src="<%= value.memberImages && value.memberImages.length > 0 ? value.memberImages[0] : '/img/default.jpeg' %>"
+                      alt="">
+                    <%= value.memberNick %>
+                  </td>
+                  <td>
+                    <%= value.memberAddress %>
+                  </td>
+                  <td>
+                    <%= new Date(value.createdAt).toDateString().split(' ').slice(1, 4).join(' ') %> 
                       </td>                      
-                       <td style="width: 13%">
-                         <select class="status active" id="<%= value._id %>">
-                           <option value="ACTIVE" <%= value.memberStatus === "ACTIVE" ? 'selected' : '' %>>ACTIVE</option>
-                           <option value="BLOCK" <%= value.memberStatus === "BLOCK" ? 'selected' : '' %>>BLOCK</option>
-                           <option value="DELETE" <%= value.memberStatus === "DELETE" ? 'selected' : '' %>>DELETE</option>
-                         </select>
-                       </td>
-                       <td> <strong> <%= value.memberPhone %> </strong></td>
-                     </tr>
-                     <tr>
-                   </tbody>
-                 <% }) %>
-               <% } %>
-           <!--  LOOP USERS: END  -->
-         </table>
-       </section>
-       <% } %>
-   </main>
-   <script src="/js/users.js"></script>
- 
- </body>
- 
- </html>
+                      <td style="width: 13%">
+                        <select class="status active" id="<%= value._id %>">
+                          <option value="ACTIVE" <%= value.memberStatus === "ACTIVE" ? ' selected' : '' %>>ACTIVE
+                      </option>
+                      <option value="BLOCK" <%=value.memberStatus==="BLOCK" ? 'selected' : '' %>>BLOCK</option>
+                      <option value="DELETE" <%=value.memberStatus==="DELETE" ? 'selected' : '' %>>DELETE</option>
+                      </select>
+                  </td>
+                  <td> <strong>
+                      <%= value.memberPhone %>
+                    </strong></td>
+                </tr>
+                <% }) %>
+              </tbody>
+      <% } %>
+                  <!--  LOOP USERS: END  -->
+      </table>
+    </section>
+  </main>
+  <script src="/js/users.js"></script>
+
+</body>
+
+</html>

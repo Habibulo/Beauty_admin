@@ -51,6 +51,12 @@ routerAdmin.post('/product/:id',
     restaurantController.verifyRestaurant,
     productController.updateChosenProduct)
 
+routerAdmin.get('/create', 
+    restaurantController.verifyRestaurant,
+    makeUploader('products').array('productImages', 5),
+    restaurantController.create
+)
+
 /* User */
 routerAdmin.get(
     "/user/all",

@@ -19,40 +19,73 @@ $(
       });
   })
 );
+
+
+const search = document.querySelector('.input-group input'),
+    table_rows = document.querySelectorAll('tbody tr'),
+    table_headings = document.querySelectorAll('thead th');
+
+// 1. Searching for specific data of HTML table
+search.addEventListener('input', searchTable);
+
+function searchTable() {
+    table_rows.forEach((row, i) => {
+        let table_data = row.textContent.toLowerCase(),
+            search_data = search.value.toLowerCase();
+
+        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+        row.style.setProperty('--delay', i / 25 + 's');
+    })
+
+    document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+        visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+    });
+}
+
 // 2. Sorting | Ordering data of HTML table
+
 document.addEventListener('DOMContentLoaded', () => {
-  const tableHeadings = document.querySelectorAll('thead th'); // Target table headings
-  const tableBody = document.querySelector('tbody'); // Target the table body
-  let tableRows = Array.from(document.querySelectorAll('tbody tr')); // Convert NodeList to array
+    const table_headings = document.querySelectorAll('thead th'); // Target table headings for sorting
+    const table_rows = document.querySelectorAll('tbody tr'); // Target rows for sorting
 
-  // Sorting event for each column header
-  tableHeadings.forEach((heading, index) => {
-      let sortAsc = true; // Track sorting direction
+    table_headings.forEach((head, i) => {
+        let sort_asc = true;
+        head.onclick = () => {
+            // Remove 'active' class from all headings
+            table_headings.forEach(head => head.classList.remove('active'));
+            head.classList.add('active');
 
-      heading.addEventListener('click', () => {
-          tableHeadings.forEach(h => h.classList.remove('active', 'asc')); // Reset other headings' styles
-          heading.classList.add('active');
-          heading.classList.toggle('asc', sortAsc); // Add ascending/descending icon
+            // Remove 'active' class from all table data
+            document.querySelectorAll('td').forEach(td => td.classList.remove('active'));
 
-          tableRows.sort((a, b) => {
-              // Get text content from the specified column for each row
-              const cellA = a.querySelectorAll('td')[index].innerText.toLowerCase().trim();
-              const cellB = b.querySelectorAll('td')[index].innerText.toLowerCase().trim();
+            // Add 'active' class to specific column cells in each row
+            table_rows.forEach(row => {
+                row.querySelectorAll('td')[i].classList.add('active');
+            });
 
-              if (sortAsc) {
-                  return cellA > cellB ? 1 : -1;
-              } else {
-                  return cellA < cellB ? 1 : -1;
-              }
-          });
+            // Toggle sort direction
+            head.classList.toggle('asc', sort_asc);
+            sort_asc = head.classList.contains('asc') ? false : true;
 
-          // Append sorted rows to the table body
-          tableRows.forEach(row => tableBody.appendChild(row));
+            // Call the sortTable function with column index and sorting direction
+            sortTable(i, sort_asc);
+        };
+    });
 
-          // Toggle sorting direction for next click
-          sortAsc = !sortAsc;
-      });
-  });
+    function sortTable(column, sort_asc) {
+        const sorted_rows = [...table_rows].sort((a, b) => {
+            let first_row = a.querySelectorAll('td')[column].textContent.toLowerCase().trim(),
+                second_row = b.querySelectorAll('td')[column].textContent.toLowerCase().trim();
+
+            // Comparison based on sort order
+            return sort_asc ? (first_row < second_row ? -1 : 1) : (first_row > second_row ? -1 : 1);
+        });
+
+        const tbody = document.querySelector('tbody');
+        sorted_rows.forEach(sorted_row => {
+            tbody.appendChild(sorted_row); // Re-attach rows in sorted order
+        });
+    }
 });
 
 
@@ -207,4 +240,3 @@ const downloadFile = function (data, fileType, fileName = '') {
     a.click();
     a.remove();
 }
-

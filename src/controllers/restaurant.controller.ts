@@ -19,6 +19,16 @@ restaurantController.goHome = (req: Request, res: Response) => {
         res.redirect('/admin')
     }
 };
+restaurantController.create = (req: Request, res: Response) => {
+    try{
+        console.log("create page landed");
+        res.render("create")
+    }
+    catch (err) {
+        console.log("Error, goHome", err);
+        res.redirect('/admin')
+    }
+}
 
 restaurantController.getLogin = (req: Request, res: Response) => {
     try {

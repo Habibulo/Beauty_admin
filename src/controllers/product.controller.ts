@@ -89,7 +89,7 @@ productController.createNewProduct = async (
     await productService.createNewProduct(data);
     res.send(
       `<script>alert("Product succesfully created in DataBase");
-            window.location.replace('/admin/product/all')</script>`
+        window.location.replace('/admin/product/all')</script>`
     );
 
     // console.log("Bizning Datamiz", data);
