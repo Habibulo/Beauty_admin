@@ -80,7 +80,7 @@
                     <%= new Date(value.createdAt).toDateString().split(' ').slice(1, 4).join(' ') %> 
                       </td>                      
                       <td style="width: 13%">
-                        <select class="status active" id="<%= value._id %>">
+                        <select class="status ACTIVE" id="<%= value._id %>">
                           <option value="ACTIVE" <%= value.memberStatus === "ACTIVE" ? ' selected' : '' %>>ACTIVE
                       </option>
                       <option value="BLOCK" <%=value.memberStatus==="BLOCK" ? 'selected' : '' %>>BLOCK</option>

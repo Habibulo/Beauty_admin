@@ -6,10 +6,10 @@ document.getElementById("cancel-btn").addEventListener("click", function (e) {
 });
 
 $(function () {
-  $(".product-collection").on("change", () => {
-    const selectedValue = $(".product-collection").val();
+  $(".product-category").on("change", () => {
+    const selectedValue = $(".product-category").val();
 
-    if (selectedValue === "DRINK") {
+    if (selectedValue === "LIQUID") {
       $("#product-collection").hide();
       $("#product-volume").show();
     } else {

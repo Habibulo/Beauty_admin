@@ -13,7 +13,7 @@ const productSchema = new Schema(
       enum: ProductStatus,
       default: ProductStatus.ACTIVE,
     },
-    productCollection: {
+    productCategory: {
       type: String,
       enum: ProductCategory,
       required: true,
@@ -34,7 +34,7 @@ const productSchema = new Schema(
     productSize: {
       type: String,
       enum: ProductSize,
-      default: ProductSize.NORMAL,
+      default: ProductSize.SMALL,
     },
     productVolume: {
       type: Number,

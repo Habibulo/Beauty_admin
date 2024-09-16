@@ -8,8 +8,8 @@ export interface Product {
     productName: string,
     productPrice: number,
     productLeftCount: number,
-    productSize: ProductSize,
-    productVolume: Number
+    productSize?: ProductSize,
+    productVolume?: Number
     productDesc?: string
     productImages: string[],
     productViews: number,

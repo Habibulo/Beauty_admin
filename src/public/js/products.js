@@ -5,6 +5,28 @@ document.getElementById("toggleFormBtn").addEventListener("click", function (e) 
   window.location.href = "/admin/create"; // Redirect to create.ejs
 });
 
+$(document).on("change", ".status-active", async (e) => {
+        const id = e.target.id;
+        const productStatus = $(`#${id}`).val();
+        console.log("id", id);
+        console.log("status", productStatus);
+
+        try {
+            const response = await axios.post(`/admin/product/${id}`, {
+            productStatus: productStatus,
+            });
+            const result = response.data;
+            console.log("javobgarlik", response.data);
+            if (result.data) {
+            console.log("Product updated!");
+            $(`#${id}`).blur();
+            } else alert("Product update failed!");
+        } catch (error) {
+            console.log(err);
+            alert("Update failed!");
+        }
+        });
+
 const search = document.querySelector('.input-group input'),
     table_rows = document.querySelectorAll('tbody tr'),
     table_headings = document.querySelectorAll('thead th');

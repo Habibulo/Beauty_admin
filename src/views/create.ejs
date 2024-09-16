@@ -32,36 +32,36 @@
           </div>
           <div class="login-input-frame">
             <div class="long-input">
-              <label>Product Name</label>
+              <label>PRODUCT NAME</label>
               <input
                 type="text"
-                placeholder="Name"
+                placeholder="NAME"
                 name="productName"
                 class="product-name"
               />
             </div>
             <input
               name="productStatus"
-              value="PAUSE"
+              value="ACTIVE"
               class="product-status"
               hidden
             />
           </div>
           <div class="half-input-frame">
             <div class="half-input">
-              <label>Product Price</label>
+              <label>PRODUCT PRICE</label>
               <input
                 type="number"
-                placeholder="Price"
+                placeholder="PRICE"
                 name="productPrice"
                 class="product-price"
               />
             </div>
             <div class="half-input">
-              <label>Product Left Counts</label>
+              <label>PRODUCT COUNTS</label>
               <input
                 type="number"
-                placeholder="Counts"
+                placeholder="COUNTS"
                 name="productLeftCount"
                 class="product-left-count"
               />
@@ -69,44 +69,46 @@
           </div>
           <div class="half-input-frame">
             <div class="half-input">
-              <label>Product Type</label>
-              <select class="product-collection" name="productCollection">
-                <option value="DISH" selected>Dish</option>
-                <option value="SALAD">Salad</option>
-                <option value="DESSERT">Dessert</option>
-                <option value="DRINK">Drink</option>
-                <option value="OTHER">Other</option>
+              <label>CATEGORY</label>
+              <select class="product-category" name="productCategory">
+                <option value="SKINCARE" selected>SKINCARE</option>
+                <option value="BODYCARE">BODYCARE</option>
+                <option value="HAIRCARE">HAIRCARE</option>
+                <option value="NAILCARE">NAILCARE</option>
+                <option value="LIQUID">LIQUID</option>
+                <option value="GROOMING">GROOMING</option>
+                <option value="OTHER">OTHER</option>
               </select>
             </div>
 
             <div class="half-input" id="product-collection">
-              <label>Dish Size</label>
+              <label style="color: rgb(255, 255, 255);">PRODUCT DIMENSIONS</label>
               <select class="product-size" name="productSize">
-                <option value="SMALL">Small</option>
-                <option value="NORMAL" selected>Normal</option>
-                <option value="LARGE">Large</option>
-                <option value="SET">Set</option>
+                <option value="SMALL">SMALL</option>
+                <option value="MEDIUM" selected>MEDIUM</option>
+                <option value="LARGE">LARGE</option>
+                <option value="SET">SET</option>
               </select>
             </div>
 
             <div class="half-input" id="product-volume" style="display: none">
-              <label>Drink Volume</label>
+              <label>LIQUID</label>
               <select class="product-volume" name="productVolume">
-                <option value="0.5">0,5 liters</option>
-                <option value="1" selected>1 liters</option>
-                <option value="1.2">1,2 liters</option>
-                <option value="1.5">1,5 liters</option>
-                <option value="2">2 liters</option>
+                <option value="50">50ml</option>
+                <option value="100" selected>100ml</option>
+                <option value="200">200ml</option>
+                <option value="350">350ml</option>
+                <option value="500">500ml</option>
               </select>
             </div>
           </div>
           <div class="long-input">
-            <label>Product Description</label>
-            <textarea name="productDesc" class="product-desc"></textarea>
+            <label>PRODUCT DESCRIPTION</label>
+            <textarea name="productDesc" class="product-desc" placeholder="PRODUCT DESCRIPTION ..."></textarea>
           </div>
 
           <div class="img-frame">
-            <label>Product Images</label>
+            <label>PRODUCT IAMGES</label>
             <div class="media-frame">
               <div class="upload-img-box">
                 <img src="/img/upload.svg" class="1" id="image-section-1" />

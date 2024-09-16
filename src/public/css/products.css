@@ -185,21 +185,21 @@ tbody tr.hide td img {
 
 .status {
   padding: .4rem 0;
-  border-radius: 2rem;
+  border-radius: 1em;
   text-align: center;
 }
 
-.status.delivered {
+.status-active {
   background-color: #86e49d;
   color: #006b21;
 }
 
-.status.cancelled {
+.status.OUTOFSTOCK {
   background-color: #d893a3;
   color: #b30021;
 }
 
-.status.pending {
+.status.PENDING {
   background-color: #ebc474;
 }
 
@@ -424,7 +424,7 @@ h1 {
   background-color: #29407f;; /* Green color for button */
   color: white;
   padding: 10px 20px;
-  border-radius: 20px;
+  /* border-radius: 30px; */
   cursor: pointer;
 }
 

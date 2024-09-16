@@ -340,12 +340,12 @@ tbody tr.hide td img {
   text-align: center;
 }
 
-.status.active {
+.status.ACTIVE {
   background-color: #86e49d;
   color: #006b21;
 }
 
-.status.cancelled {
+.status.BLOCK {
   background-color: #d893a3;
   color: #b30021;
 }
@@ -354,7 +354,7 @@ tbody tr.hide td img {
   background-color: #ebc474;
 }
 
-.status.shipped {
+.status.DELETE {
   background-color: #6fcaea;
 }
 

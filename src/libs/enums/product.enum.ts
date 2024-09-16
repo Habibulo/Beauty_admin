@@ -1,8 +1,8 @@
 export enum ProductSize {
 	SMALL = "SMALL",
-	NORMAL = "NORMAL",
+	MEDIUM = "MEDIUM",
 	LARGE = "LARGE",
-	AQUA = "AQUA",
+	SET = "SET",
 }
 
 export enum ProductCategory {
@@ -10,7 +10,7 @@ export enum ProductCategory {
 	BODYCARE = "BODYCARE",
 	HAIRCARE = "HAIRCARE",
 	NAILCARE = "NAILCARE",
-	FRAGRANCE = "FRAGRANCE",
+	LIQUID = "LIQUID",
 	GROOMING = "GROOMING",
 	OTHER = "OTHER",
 }
@@ -18,7 +18,7 @@ export enum ProductCategory {
 export enum ProductVolume {
 	HALF = 50,
 	ONE = 100,
-	POINT_TWO = 250,
+	POINT_TWO = 200,
 	POINT_THREE = 350,
 	POINT_FIVE = 500,
 }
