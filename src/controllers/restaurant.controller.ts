@@ -57,7 +57,7 @@ restaurantController.processSignup = async (req: AdminRequest, res: Response) =>
         if(!file)
             throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG)
         const newMember: MemberInput = req.body;
-        newMember.memberType = memberType.RESTAURANT;
+        newMember.memberType = memberType.ADMIN;
         newMember.memberImage = file?.path
         const result = await memberService.processSignup(newMember)
 
@@ -123,7 +123,7 @@ restaurantController.verifyRestaurant = (
     res: Response,
     next: NextFunction
 ) => {
-    if (req.session?.member?.memberType === memberType.RESTAURANT) {
+    if (req.session?.member?.memberType === memberType.ADMIN) {
         req.member = req.session.member;
         next();
     } else {
