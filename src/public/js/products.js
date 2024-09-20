@@ -32,7 +32,7 @@ const search = document.querySelector('.input-group input'),
     table_headings = document.querySelectorAll('thead th');
 
 // 1. Searching for specific data of HTML table
-search.addEventListener('input', searchTable);
+search.addEventListener('input-group', searchTable);
 
 function searchTable() {
     table_rows.forEach((row, i) => {

@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Convert | Export html Table to CSV & EXCEL File</title>
+  <title>Beauty_admin</title>
   <link rel="stylesheet" type="text/css" href="/css/users.css">
+  <script src="/js/users.js"></script>
   <!-- <link rel="stylesheet" type="text/css" href="/css/home.css"> -->
 </head>
 
@@ -69,7 +70,7 @@
                   </td>
                   <td>
                     <img
-                      src="<%= value.memberImages && value.memberImages.length > 0 ? value.memberImages[0] : '/img/default.jpeg' %>"
+                      src="/<%= value.memberImage ? value.memberImage : 'img/default.jpeg' %>"
                       alt="">
                     <%= value.memberNick %>
                   </td>
@@ -98,8 +99,6 @@
       </table>
     </section>
   </main>
-  <script src="/js/users.js"></script>
-
 </body>
 
 </html>

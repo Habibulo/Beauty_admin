@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="/css/products.css" />
   <title>Beauty_admin</title>
+  <script type="text/javascript" src="/js/products.js"></script>
 </head>
 
 <body>
@@ -66,7 +67,7 @@
                 <%= key +1 %>
               </td>
               <td>
-                <img src="<%= val.productImages[0]%>" alt=""
+                <img src="/<%= val.productImages[0]%>" alt=""
                   style="width: 50px; height: 50px;">
               </td>
               <td>
@@ -88,7 +89,7 @@
               </td>
 
               <td>
-                <%= val.productPrice%>
+                $<%= val.productPrice%>
               </td>
             </tr>
             <% })%>
@@ -96,7 +97,6 @@
       </table>
     </section>
   </main>
-  <script type="text/javascript" src="/js/products.js"></script>
 </body>
 <%- include('includes/footer') %>
 
