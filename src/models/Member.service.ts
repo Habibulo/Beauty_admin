@@ -142,7 +142,7 @@ class MemberService {
         const result = await this.memberModel
             .find({
                 memberStatus: memberStatus.ACTIVE,
-                memberPoints: { $gte: 1 }
+                memberPoints: { $gte: 1 },
             })
             .sort({ memberPoints: -1 })
             .limit(4)
