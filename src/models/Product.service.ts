@@ -26,7 +26,7 @@ class ProductService {
   public async getProducts(inquiry: ProductInquiry): Promise<Product[]> {
     const match: T = { productStatus: ProductStatus.ACTIVE };
     if (inquiry.productCategory)
-      match.productCollection = inquiry.productCategory;
+      match.productCategory = inquiry.productCategory;
     if (inquiry.search) {
       match.productName = { $regex: new RegExp(inquiry.search, "i") };
     }
@@ -46,7 +46,7 @@ class ProductService {
       .exec();
 
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
-
+    
     return result;
   }
 

@@ -59,15 +59,18 @@ const ensureBaseDirectoriesExist = (baseDir: string) => {
   const uploadsDir = path.join(baseDir, '../../../uploads');
   const membersDir = path.join(uploadsDir, 'members');
   const productsDir = path.join(uploadsDir, 'products');
+  const ordersDir = path.join(uploadsDir, 'orders');
 
   if (
     !fs.existsSync(uploadsDir) && 
-    !fs.existsSync(membersDir)&&
-    !fs.existsSync(productsDir)
+    !fs.existsSync(membersDir) &&
+    !fs.existsSync(productsDir) &&
+    !fs.existsSync(ordersDir)
   ) {
     fs.mkdirSync(uploadsDir, { recursive: true });
     fs.mkdirSync(membersDir, { recursive: true });
     fs.mkdirSync(productsDir, { recursive: true });
+    fs.mkdirSync(ordersDir, {recursive: true})
   }
 }
 

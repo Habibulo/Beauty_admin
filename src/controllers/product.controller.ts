@@ -21,7 +21,7 @@ productController.getProducts = async (req: Request, res: Response) => {
       page: Number(page),
       limit: Number(limit),
     };
-    console.log("inquiry shakli:", inquiry);
+    // console.log("inquiry shakli:", inquiry);
     
     if (productCategory)
       inquiry.productCategory = productCategory as ProductCategory;
@@ -42,7 +42,7 @@ productController.getProduct = async (
   try {
     console.log("getProduct");
     const { id } = req.params;
-    console.log("request malumotlar", req.params);
+    // console.log("request malumotlar", req.params);
     const memberId = req.member?._id ?? null;
     console.log("user ID: ", memberId);
 
