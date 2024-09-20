@@ -7,6 +7,8 @@
   <link rel="stylesheet" type="text/css" href="/css/products.css" />
   <title>Beauty_admin</title>
   <script type="text/javascript" src="/js/products.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -40,10 +42,10 @@
         <input type="checkbox" id="export-file">
         <div class="export__file-options">
           <label>Export As &nbsp; &#10140;</label>
-          <label for="export-file" id="toPDF">PDF <img src="/img/userImages/pdf.png" alt=""></label>
-          <label for="export-file" id="toJSON">JSON <img src="/img/userImages/json.png" alt=""></label>
-          <label for="export-file" id="toCSV">CSV <img src="/img/userImages/csv.png" alt=""></label>
-          <label for="export-file" id="toEXCEL">EXCEL <img src="/img/userImages/excel.png" alt=""></label>
+          <label for="export-file" id="toJSON">JSON<img src="/img/userImages/json.png" alt=""></label>
+          <label for="export-file" id="toCSV">CSV<img src="/img/userImages/csv.png" alt=""></label>
+          <label for="export-file" id="toEXCEL">EXCEL<img src="/img/userImages/excel.png" alt=""></label>
+          <label for="export-file" id="toPDF">PDF<img src="/img/userImages/pdf.png" alt=""></label>
         </div>
       </div>
     </section>
@@ -67,8 +69,7 @@
                 <%= key +1 %>
               </td>
               <td>
-                <img src="/<%= val.productImages[0]%>" alt=""
-                  style="width: 50px; height: 50px;">
+                <img src="/<%= val.productImages[0]%>" alt="">
               </td>
               <td>
                 <%= val.productName%>
@@ -80,14 +81,12 @@
                 <%= val.productLeftCount %>
               </td>
               <td>
-                <select class="status-active" id="<%= val._id%>">
-                  <option value="ACTIVE" <%=val.productStatus==="ACTIVE" ? 'selected' : '' %> >ACTIVE</option>
-                  <option value="PENDING" <%=val.productStatus==="PENDING" ? 'selected' : '' %> >PENDING</option>
-                  <option value="OUTOFSTOCK" <%=val.productStatus==="OUTOFSTOCK" ? 'selected' : '' %>>OUTOFSTOCK
-                  </option>
+                <select class="status-active <%= val.productStatus %>" id="<%= val._id %>">
+                  <option value="ACTIVE" <%= val.productStatus === "ACTIVE" ? 'selected' : '' %>>ACTIVE</option>
+                  <option value="PENDING" <%= val.productStatus === "PENDING" ? 'selected' : '' %>>PENDING</option>
+                  <option value="OUTOFSTOCK" <%= val.productStatus === "OUTOFSTOCK" ? 'selected' : '' %>>OUTOFSTOCK</option>
                 </select>
               </td>
-
               <td>
                 $<%= val.productPrice%>
               </td>

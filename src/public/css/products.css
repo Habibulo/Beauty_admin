@@ -123,7 +123,7 @@ table {
 }
 
 td img {
-  width: 50px;
+  width: 40px;
   height: 40px;
   margin-right: .5rem;
   border-radius: 30%;
@@ -183,24 +183,29 @@ tbody tr.hide td img {
   transition: .2s ease-in-out .5s;
 }
 
-.status {
+.status-active {
   padding: .4rem 0;
   border-radius: 1em;
   text-align: center;
+  background-color: #86e49d; /* Default ACTIVE background */
+  color: #006b21; /* Default ACTIVE text color */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.status-active {
+/* Additional status colors based on class */
+.status-active.ACTIVE {
   background-color: #86e49d;
   color: #006b21;
 }
 
-.status.OUTOFSTOCK {
+.status-active.OUTOFSTOCK {
   background-color: #d893a3;
   color: #b30021;
 }
 
-.status.PENDING {
+.status-active.PENDING {
   background-color: #ebc474;
+  color: #996200;
 }
 
 .status.shipped {
@@ -283,7 +288,7 @@ thead th.active,tbody td.active {
   width: 12rem;
   border-radius: .5rem;
   overflow: hidden;
-  text-align: center;
+  text-align: right;
 
   opacity: 0;
   transform: scale(.8);

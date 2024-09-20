@@ -1,55 +1,60 @@
 console.log("Products.js file working");
 
-document.getElementById("toggleFormBtn").addEventListener("click", function (e) {
-  e.preventDefault(); // Prevent default behavior of the button
-  window.location.href = "/admin/create"; // Redirect to create.ejs
-});
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleFormBtn = document.getElementById("toggleFormBtn");
+    if (toggleFormBtn) {
+        toggleFormBtn.addEventListener("click", function (e) {
+            e.preventDefault(); // Prevent default behavior of the button
+            window.location.href = "/admin/create"; // Redirect to create.ejs
+        });
+    }
+    const search = document.querySelector('.input-group input'),
+        table_rows = document.querySelectorAll('tbody tr');
 
-$(document).on("change", ".status-active", async (e) => {
-        const id = e.target.id;
-        const productStatus = $(`#${id}`).val();
-        console.log("id", id);
-        console.log("status", productStatus);
+    // 1. Searching for specific data of HTML table
+    search.addEventListener('input', searchTable); // Corrected from 'input-group' to 'input'
 
-        try {
-            const response = await axios.post(`/admin/product/${id}`, {
-            productStatus: productStatus,
-            });
-            const result = response.data;
-            console.log("javobgarlik", response.data);
-            if (result.data) {
-            console.log("Product updated!");
-            $(`#${id}`).blur();
-            } else alert("Product update failed!");
-        } catch (error) {
-            console.log(err);
-            alert("Update failed!");
-        }
+    function searchTable() {
+        table_rows.forEach((row, i) => {
+            let table_data = row.textContent.toLowerCase(),
+                search_data = search.value.toLowerCase();
+
+            row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
+            row.style.setProperty('--delay', i / 25 + 's');
         });
 
-const search = document.querySelector('.input-group input'),
-    table_rows = document.querySelectorAll('tbody tr'),
-    table_headings = document.querySelectorAll('thead th');
+        document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
+            visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
+        });
+    }
+});
 
-// 1. Searching for specific data of HTML table
-search.addEventListener('input-group', searchTable);
 
-function searchTable() {
-    table_rows.forEach((row, i) => {
-        let table_data = row.textContent.toLowerCase(),
-            search_data = search.value.toLowerCase();
+// $(document).on("change", ".status-active", async (e) => {
+//         const id = e.target.id;
+//         const productStatus = $(`#${id}`).val();
+//         console.log("id", id);
+//         console.log("status", productStatus);
 
-        row.classList.toggle('hide', table_data.indexOf(search_data) < 0);
-        row.style.setProperty('--delay', i / 25 + 's');
-    })
+//         try {
+//             const response = await axios.post(`/admin/product/${id}`, {
+//             productStatus: productStatus,
+//             });
+//             const result = response.data;
+//             console.log("javobgarlik", response.data);
+//             if (result.data) {
+//             console.log("Product updated!");
+//             $(`#${id}`).blur();
+//             } else alert("Product update failed!");
+//         } catch (error) {
+//             console.log(err);
+//             alert("Update failed!");
+//         }
+//         });
 
-    document.querySelectorAll('tbody tr:not(.hide)').forEach((visible_row, i) => {
-        visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
-    });
-}
+
 
 // 2. Sorting | Ordering data of HTML table
-
 document.addEventListener('DOMContentLoaded', () => {
     const table_headings = document.querySelectorAll('thead th'); // Target table headings for sorting
     const table_rows = document.querySelectorAll('tbody tr'); // Target rows for sorting
@@ -92,157 +97,177 @@ document.addEventListener('DOMContentLoaded', () => {
             tbody.appendChild(sorted_row); // Re-attach rows in sorted order
         });
     }
-});
 
+    // 3. Converting HTML table to PDF
+    const pdf_btn = document.querySelector('#toPDF');
+    const customers_table = document.querySelector('#customers_table');
 
-// 3. Converting HTML table to PDF
-
-const pdf_btn = document.querySelector('#toPDF');
-const customers_table = document.querySelector('#customers_table');
-
-
-const toPDF = function (customers_table) {
-    const html_code = `
+    const toPDF = function (customers_table) {
+        const html_code = `
     <!DOCTYPE html>
     <link rel="stylesheet" type="text/css" href="style.css">
     <main class="table" id="customers_table">${customers_table.innerHTML}</main>`;
 
-    const new_window = window.open();
-     new_window.document.write(html_code);
+        const new_window = window.open();
+        new_window.document.write(html_code);
 
-    setTimeout(() => {
-        new_window.print();
-        new_window.close();
-    }, 400);
-}
+        setTimeout(() => {
+            new_window.print();
+            new_window.close();
+        }, 400);
+    };
 
-pdf_btn.onclick = () => {
-    toPDF(customers_table);
-}
+    pdf_btn.onclick = () => {
+        toPDF(customers_table);
+    };
 
-// 4. Converting HTML table to JSON
+    // 4. Converting HTML table to JSON
+    const json_btn = document.querySelector('#toJSON');
 
-const json_btn = document.querySelector('#toJSON');
+    const toJSON = function (table) {
+        let table_data = [],
+            t_head = [],
+            t_headings = table.querySelectorAll('th'),
+            t_rows = table.querySelectorAll('tbody tr');
 
-const toJSON = function (table) {
-    let table_data = [],
-        t_head = [],
+        for (let t_heading of t_headings) {
+            let actual_head = t_heading.textContent.trim().split(' ');
+            t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
+        }
 
-        t_headings = table.querySelectorAll('th'),
-        t_rows = table.querySelectorAll('tbody tr');
+        t_rows.forEach(row => {
+            const row_object = {},
+                t_cells = row.querySelectorAll('td');
 
-    for (let t_heading of t_headings) {
-        let actual_head = t_heading.textContent.trim().split(' ');
+            t_cells.forEach((t_cell, cell_index) => {
+                const img = t_cell.querySelector('img');
+                if (img) {
+                    row_object['customer image'] = decodeURIComponent(img.src);
+                }
+                row_object[t_head[cell_index]] = t_cell.textContent.trim();
+            });
+            table_data.push(row_object);
+        });
 
-        t_head.push(actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase());
-    }
+        return JSON.stringify(table_data, null, 4);
+    };
 
-    t_rows.forEach(row => {
-        const row_object = {},
-            t_cells = row.querySelectorAll('td');
+    json_btn.onclick = () => {
+        const json = toJSON(customers_table);
+        downloadFile(json, 'json');
+    };
 
-        t_cells.forEach((t_cell, cell_index) => {
-            const img = t_cell.querySelector('img');
-            if (img) {
-                row_object['customer image'] = decodeURIComponent(img.src);
-            }
-            row_object[t_head[cell_index]] = t_cell.textContent.trim();
-        })
-        table_data.push(row_object);
-    })
+    // 5. Converting HTML table to CSV
+    const csv_btn = document.querySelector('#toCSV');
 
-    return JSON.stringify(table_data, null, 4);
-}
+    const toCSV = function (table) {
+        const t_heads = table.querySelectorAll('th'),
+            tbody_rows = table.querySelectorAll('tbody tr');
 
-json_btn.onclick = () => {
-    const json = toJSON(customers_table);
-    downloadFile(json, 'json')
-}
+        const headings = [...t_heads].map(head => {
+            let actual_head = head.textContent.trim().split(' ');
+            return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+        }).join(',') + ',' + 'image name';
 
-// 5. Converting HTML table to CSV File
+        const table_data = [...tbody_rows].map(row => {
+            const cells = row.querySelectorAll('td'),
+                img = decodeURIComponent(row.querySelector('img').src),
+                data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
 
-const csv_btn = document.querySelector('#toCSV');
+            return data_without_img + ',' + img;
+        }).join('\n');
 
-const toCSV = function (table) {
-    // Code For SIMPLE TABLE
-    // const t_rows = table.querySelectorAll('tr');
-    // return [...t_rows].map(row => {
-    //     const cells = row.querySelectorAll('th, td');
-    //     return [...cells].map(cell => cell.textContent.trim()).join(',');
-    // }).join('\n');
+        return headings + '\n' + table_data;
+    };
 
-    const t_heads = table.querySelectorAll('th'),
-        tbody_rows = table.querySelectorAll('tbody tr');
+    csv_btn.onclick = () => {
+        const csv = toCSV(customers_table);
+        downloadFile(csv, 'csv', 'customer orders');
+    };
 
-    const headings = [...t_heads].map(head => {
-        let actual_head = head.textContent.trim().split(' ');
-        return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-    }).join(',') + ',' + 'image name';
+    // 6. Converting HTML table to EXCEL
+    const excel_btn = document.querySelector('#toEXCEL');
 
-    const table_data = [...tbody_rows].map(row => {
-        const cells = row.querySelectorAll('td'),
-            img = decodeURIComponent(row.querySelector('img').src),
-            data_without_img = [...cells].map(cell => cell.textContent.replace(/,/g, ".").trim()).join(',');
+    const toExcel = function (table) {
+        const t_heads = table.querySelectorAll('th'),
+            tbody_rows = table.querySelectorAll('tbody tr');
 
-        return data_without_img + ',' + img;
-    }).join('\n');
+        const headings = [...t_heads].map(head => {
+            let actual_head = head.textContent.trim().split(' ');
+            return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
+        }).join('\t') + '\t' + 'image name';
 
-    return headings + '\n' + table_data;
-}
+        const table_data = [...tbody_rows].map(row => {
+            const cells = row.querySelectorAll('td'),
+                img = decodeURIComponent(row.querySelector('img').src),
+                data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
 
-csv_btn.onclick = () => {
-    const csv = toCSV(customers_table);
-    downloadFile(csv, 'csv', 'customer orders');
-}
+            return data_without_img + '\t' + img;
+        }).join('\n');
 
-// 6. Converting HTML table to EXCEL File
+        return headings + '\n' + table_data;
+    };
 
-const excel_btn = document.querySelector('#toEXCEL');
+    excel_btn.onclick = () => {
+        const excel = toExcel(customers_table);
+        downloadFile(excel, 'excel');
+    };
 
-const toExcel = function (table) {
-    // Code For SIMPLE TABLE
-    // const t_rows = table.querySelectorAll('tr');
-    // return [...t_rows].map(row => {
-    //     const cells = row.querySelectorAll('th, td');
-    //     return [...cells].map(cell => cell.textContent.trim()).join('\t');
-    // }).join('\n');
+    const downloadFile = function (data, fileType, fileName = '') {
+        const a = document.createElement('a');
+        a.download = fileName;
+        const mime_types = {
+            'json': 'application/json',
+            'csv': 'text/csv',
+            'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        };
+        a.href = `data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    };
 
-    const t_heads = table.querySelectorAll('th'),
-        tbody_rows = table.querySelectorAll('tbody tr');
+});
 
-    const headings = [...t_heads].map(head => {
-        let actual_head = head.textContent.trim().split(' ');
-        return actual_head.splice(0, actual_head.length - 1).join(' ').toLowerCase();
-    }).join('\t') + '\t' + 'image name';
-
-    const table_data = [...tbody_rows].map(row => {
-        const cells = row.querySelectorAll('td'),
-            img = decodeURIComponent(row.querySelector('img').src),
-            data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
-
-        return data_without_img + '\t' + img;
-    }).join('\n');
-
-    return headings + '\n' + table_data;
-}
-
-excel_btn.onclick = () => {
-    const excel = toExcel(customers_table);
-    downloadFile(excel, 'excel');
-}
-
-const downloadFile = function (data, fileType, fileName = '') {
-    const a = document.createElement('a');
-    a.download = fileName;
-    const mime_types = {
-        'json': 'application/json',
-        'csv': 'text/csv',
-        'excel': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    }
-    a.href = `
-        data:${mime_types[fileType]};charset=utf-8,${encodeURIComponent(data)}
-    `;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-}
+document.addEventListener('DOMContentLoaded', () => {
+    // On page load, set background color for each status-active dropdown
+    document.querySelectorAll('.status-active').forEach(select => {
+      const selectedOption = select.querySelector('option:checked');
+      const statusClass = selectedOption.value;
+  
+      select.classList.add(statusClass); // Apply the correct status class
+  
+      // Event listener for status change
+      select.addEventListener('change', async (e) => {
+        const id = e.target.id;
+        const productStatus = e.target.value; // Fetch selected value
+  
+        console.log("id:", id);
+        console.log("status:", productStatus);
+  
+        // Update the background color dynamically based on the selected status
+        e.target.className = `status-active ${productStatus}`; // Reset class to reflect the new status
+  
+        // Make API call to update the status in the database
+        try {
+          const response = await axios.post(`/admin/product/${id}`, {
+            productStatus: productStatus,
+          });
+          const result = response.data;
+          console.log("Response:", result);
+  
+          if (result.data) {
+            console.log("Product updated!");
+            $(".status-active").blur();
+          } else {
+            alert("Product update failed!");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("Update failed!");
+        }
+      });
+    });
+  });
+  
+  
