@@ -1,1 +1,198 @@
-<link rel="icon" type="image/png" href="/img/setting.webp" />
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/setting.webp" />
+  <link rel="stylesheet" type="text/css" href="/css/products.css" />
+  <link rel="icon" type="image/png" href="/img/setting.webp" />
+  <title>Beauty_admin</title>
+  <script type="text/javascript" src="/js/products.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+<body>
+  <div class="products-container">
+    <div class="navigation-menu">
+      <ul class="nav justify-content-center">
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link active" href="/admin/">Home</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/product/all">Products</a>
+        </li>
+        <li class="nav-item" style="cursor: pointer">
+          <a class="nav-link" href="/admin/user/all">Users</a>
+        </li>
+        <li
+          class="nav-item"
+          style="cursor: pointer"
+          onclick="return confirm('Do you want to logout?')"
+        >
+          <a class="nav-link" href="/admin/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="restaurant-menu-frame">
+      <div class="board">
+        <% products.map((val, key)=> {%>
+        <form onsubmit="return validateForm()" id="<%= val._id %>" action="/admin/product/:id" method="POST" class="dish-container" enctype="multipart/form-data" >
+          <div class="long-input" style="display: flex; align-items: center">
+            <span class="new-dish-txt">NEW PRODUCT DETAIL</span>
+          </div>
+          <div class="login-input-frame">
+            <div class="long-input">
+              <label>PRODUCT NAME</label>
+              <input
+                type="text"
+                placeholder="<%= val.productName%>"
+                name="productName"
+                class="product-name"
+              />
+            </div>
+            <input
+              name="productStatus"
+              value="<%= val.productStatus %>"
+              class="product-status"
+              hidden
+            />
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>PRODUCT PRICE</label>
+              <input
+                type="number"
+                placeholder= "$<%= val.productPrice %>"
+                name="productPrice"
+                class="product-price"
+              />
+            </div>
+            <div class="half-input">
+              <label>PRODUCT COUNTS</label>
+              <input
+                type="number"
+                placeholder="<%= val.productLeftCount %>"
+                name="productLeftCount"
+                class="product-left-count"
+              />
+            </div>
+          </div>
+          <div class="half-input-frame">
+            <div class="half-input">
+              <label>CATEGORY</label>
+              <select class="product-category" name="productCategory">
+                <option value="<%=val.productCategory %>" selected><%=val.productCategory %></option>
+                <option value="SKINCARE">SKINCARE</option>
+                <option value="BODYCARE">BODYCARE</option>
+                <option value="HAIRCARE">HAIRCARE</option>
+                <option value="NAILCARE">NAILCARE</option>
+                <option value="LIQUID">LIQUID</option>
+                <option value="GROOMING">GROOMING</option>
+                <option value="OTHER">OTHER</option>
+              </select>
+            </div>
+
+            <div class="half-input" id="product-collection">
+              <label style="color: rgb(255, 255, 255);">PRODUCT DIMENSIONS</label>
+              <select class="product-size" name="productSize">
+                <option value="<%=val.productSe %>" selected><%=val.productSize %></option>
+                <option value="SMALL">SMALL</option>
+                <option value="MEDIUM">MEDIUM</option>
+                <option value="LARGE">LARGE</option>
+                <option value="SET">SET</option>
+              </select>
+            </div>
+
+            <div class="half-input" id="product-volume" style="display: none">
+              <label>LIQUID</label>
+              <select class="product-volume" name="productVolume">
+                <option value="<%=val.productVolume %>" selected><%=val.productVolume %></option>
+                <option value="50">50ml</option>
+                <option value="100">100ml</option>
+                <option value="200">200ml</option>
+                <option value="350">350ml</option>
+                <option value="500">500ml</option>
+              </select>
+            </div>
+          </div>
+          <div class="long-input">
+            <label>PRODUCT DESCRIPTION</label>
+            <textarea name="productDesc" class="product-desc" placeholder="<%=val.productDesc %>"></textarea>
+          </div>
+
+          <div class="img-frame">
+            <label>PRODUCT IAMGES</label>
+            <div class="media-frame">
+              <div class="upload-img-box">
+                <img src="/<%= val.productImages%> ? <%= val.productImages[0] %> : /img/upload.svg" class="1" id="image-section-1" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-one"
+                  onchange="previewFileHendler(this, 1)"
+          
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/<%= val.productImages%> ? <%= val.productImages[1] %> : /img/upload.svg"  class="2" id="image-section-2" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-two"
+                  onchange="previewFileHendler(this, 2)"
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/<%= val.productImages%> ? <%= val.productImages[2] %> : /img/upload.svg"  class="3" id="image-section-3" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-three"
+                  onchange="previewFileHendler(this, 3)"
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/<%= val.productImages%> ? <%= val.productImages[3] %> : /img/upload.svg"  class="4" id="image-section-4" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-four"
+                  onchange="previewFileHendler(this, 4)"
+                />
+              </div>
+              <div class="upload-img-box">
+                <img src="/<%= val.productImages%> ? <%= val.productImages[4] %> : /img/upload.svg"  class="5" id="image-section-5" />
+                <input
+                  type="file"
+                  id="file"
+                  name="productImages"
+                  class="image-five"
+                  onchange="previewFileHendler(this, 5)"
+                />
+              </div>
+              <input name="restaurantId" class="restaurant-id" hidden />
+            </div>
+          </div>
+          <% })%>
+          <div class="operation-buttons">
+            <button type="button"  class="cancel-btn"  id="cancel-btn">Cancel</button>
+            <button type="submit"  class="create-btn"  id="create-btn">
+              Update
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="/js/create.js"></script>
+</body> -->

@@ -30,6 +30,17 @@ restaurantController.create = (req: Request, res: Response) => {
     }
 }
 
+restaurantController.update = (req: Request, res: Response) => {
+    try{
+        console.log("update page landed");
+        res.render("update")
+    }
+    catch (err) {
+        console.log("Error, goHome", err);
+        res.redirect('/admin')
+    }
+}
+
 restaurantController.getLogin = (req: Request, res: Response) => {
     try {
         console.log("Login Page")
@@ -70,7 +81,7 @@ restaurantController.processSignup = async (req: AdminRequest, res: Response) =>
     } catch (err) {
         console.log("Error, ProcessLogin", err);
         const message = err instanceof Error ? err.message : Message.SOMETHING_WENT_WRONG;
-        res.send(`<script>alert(${message}); window.location.replace('/admin/signup')</script>`)
+        res.send(`<script> alert(${JSON.stringify(message)}); window.location.replace('/admin')</script>`)
     }
 };
 
@@ -89,8 +100,14 @@ restaurantController.processLogin = async (req: AdminRequest, res: Response) => 
     } catch (err) {
         console.log("Error, ProcessLogin", err);
         const message = err instanceof Error ? err.message : Message.SOMETHING_WENT_WRONG;
-        res.send(`<script>alert(${message}); window.location.replace('/admin/signup')</script>`)
-    }
+    
+        res.send(`
+            <script>
+                alert(${JSON.stringify(message)});
+                window.location.replace('/admin/signup');
+            </script>
+        `);
+    }    
 };
 
 restaurantController.logout = async (req: AdminRequest, res: Response) => {
@@ -128,7 +145,7 @@ restaurantController.verifyRestaurant = (
         next();
     } else {
         const message = Message.NOT_AUTHENTICATED
-        res.send(`<script>alert('${message}'); window.location.replace('/admin/login')</script>`)
+        res.send(`<script>alert('${message}') window.location.replace('/admin/login')</script>`)
     }
 }
 

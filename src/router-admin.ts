@@ -47,8 +47,14 @@ routerAdmin.post('/product/create',
     makeUploader('products').array('productImages', 5),
     productController.createNewProduct);
 
+routerAdmin.get('/product/:id',
+    restaurantController.verifyRestaurant,
+    makeUploader('products').array('productImages', 5),
+    restaurantController.update)
+
 routerAdmin.post('/product/:id',
     restaurantController.verifyRestaurant,
+    makeUploader('products').array('productImages', 5),
     productController.updateChosenProduct)
 
 routerAdmin.get('/create', 
@@ -56,6 +62,7 @@ routerAdmin.get('/create',
     makeUploader('products').array('productImages', 5),
     restaurantController.create
 )
+// routerAdmin.get()
 
 /* User */
 routerAdmin.get(

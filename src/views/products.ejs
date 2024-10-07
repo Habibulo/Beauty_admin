@@ -10,6 +10,9 @@
   <script type="text/javascript" src="/js/products.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+
 </head>
 
 <body>
@@ -66,8 +69,9 @@
         <tbody>
           <% products.map((val, key)=> {%>
             <tr>
-              <td id="<%= val._id%>">
+              <td class="button-num" >
                 <%= key +1 %>
+                <!-- <button class="button-edit" id="<%= val._id%>" >edit</button> -->
               </td>
               <td>
                 <img src="/<%= val.productImages[0]%>" alt="">
@@ -89,7 +93,7 @@
                 </select>
               </td>
               <td>
-                $<%= val.productPrice%>
+                $<%= val.productPrice %>
               </td>
             </tr>
             <% })%>

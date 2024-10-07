@@ -54,25 +54,26 @@ function getTargetImageStorage(address: any) {
   });
 }
 
-
 const ensureBaseDirectoriesExist = (baseDir: string) => {
   const uploadsDir = path.join(baseDir, '../../../uploads');
   const membersDir = path.join(uploadsDir, 'members');
   const productsDir = path.join(uploadsDir, 'products');
   const ordersDir = path.join(uploadsDir, 'orders');
 
-  if (
-    !fs.existsSync(uploadsDir) && 
-    !fs.existsSync(membersDir) &&
-    !fs.existsSync(productsDir) &&
-    !fs.existsSync(ordersDir)
-  ) {
+  if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
-    fs.mkdirSync(membersDir, { recursive: true });
-    fs.mkdirSync(productsDir, { recursive: true });
-    fs.mkdirSync(ordersDir, {recursive: true})
   }
-}
+  if (!fs.existsSync(membersDir)) {
+    fs.mkdirSync(membersDir, { recursive: true });
+  }
+  if (!fs.existsSync(productsDir)) {
+    fs.mkdirSync(productsDir, { recursive: true });
+  }
+  if (!fs.existsSync(ordersDir)) {
+    fs.mkdirSync(ordersDir, { recursive: true });
+  }
+};
+
 
 const makeUploader = (address: string) => {
   ensureBaseDirectoriesExist(__dirname);

@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "/admin/create"; // Redirect to create.ejs
         });
     }
+    const toggleEditFormBtn = document.getElementById("<%= val._id %>");
+    if (toggleEditFormBtn) {
+    toggleEditFormBtn.addEventListener("click", function (e) {
+        e.preventDefault(); // Prevent default behavior of the button
+        const productId = "<%= val._id %>"; // Get the product id from the backend
+        window.location.href = `/admin/product/${productId}`; // Redirect to the correct update page
+    });
+}
+
     const search = document.querySelector('.input-group input'),
         table_rows = document.querySelectorAll('tbody tr');
 
@@ -28,31 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
-
-
-// $(document).on("change", ".status-active", async (e) => {
-//         const id = e.target.id;
-//         const productStatus = $(`#${id}`).val();
-//         console.log("id", id);
-//         console.log("status", productStatus);
-
-//         try {
-//             const response = await axios.post(`/admin/product/${id}`, {
-//             productStatus: productStatus,
-//             });
-//             const result = response.data;
-//             console.log("javobgarlik", response.data);
-//             if (result.data) {
-//             console.log("Product updated!");
-//             $(`#${id}`).blur();
-//             } else alert("Product update failed!");
-//         } catch (error) {
-//             console.log(err);
-//             alert("Update failed!");
-//         }
-//         });
-
-
 
 // 2. Sorting | Ordering data of HTML table
 document.addEventListener('DOMContentLoaded', () => {
@@ -100,13 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Converting HTML table to PDF
     const pdf_btn = document.querySelector('#toPDF');
-    const customers_table = document.querySelector('#customers_table');
+    const table = document.querySelector('table__body');
 
-    const toPDF = function (customers_table) {
+    const toPDF = function (table) {
         const html_code = `
     <!DOCTYPE html>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <main class="table" id="customers_table">${customers_table.innerHTML}</main>`;
+    <main class="table" id="table__body">${customers_table.innerHTML}</main>`;
 
         const new_window = window.open();
         new_window.document.write(html_code);
@@ -114,11 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             new_window.print();
             new_window.close();
-        }, 400);
+        }, 10000);
     };
 
     pdf_btn.onclick = () => {
-        toPDF(customers_table);
+        toPDF(table);
     };
 
     // 4. Converting HTML table to JSON
@@ -182,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     csv_btn.onclick = () => {
         const csv = toCSV(customers_table);
-        downloadFile(csv, 'csv', 'customer orders');
+        downloadFile(csv, 'csv', 'products');
     };
 
     // 6. Converting HTML table to EXCEL
@@ -201,16 +185,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const cells = row.querySelectorAll('td'),
                 img = decodeURIComponent(row.querySelector('img').src),
                 data_without_img = [...cells].map(cell => cell.textContent.trim()).join('\t');
-
             return data_without_img + '\t' + img;
-        }).join('\n');
+        }).join();
 
         return headings + '\n' + table_data;
     };
 
     excel_btn.onclick = () => {
         const excel = toExcel(customers_table);
-        downloadFile(excel, 'excel');
+        downloadFile(excel, 'xls', 'excel');
     };
 
     const downloadFile = function (data, fileType, fileName = '') {

@@ -117,9 +117,22 @@ main.table {
   visibility: visible;
 }
 
-
 table {
   width: 100%;
+}
+
+.button-num{
+  display: flex;
+  align-items: center;
+  padding-top: 25px;
+  justify-content: space-between;
+}
+
+.button-edit {
+  background-color: #86e49d;
+  cursor: pointer;
+  border-radius: 15px;
+  width: 50px
 }
 
 td img {
